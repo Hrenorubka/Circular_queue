@@ -1,102 +1,101 @@
 #include "Queue.h"
 #include <gtest.h>
 
-TEST(Queue, can_create_Queue)
+TEST(Queue, can_create_queue)
 {
-  ASSERT_NO_THROW(Stack<int> s());
+  ASSERT_NO_THROW(Queue<int> q());
 }
 
-TEST(Queue, can_create_stack_with_pozitive_length)
+TEST(Queue, can_create_queue_with_pozitive_length)
 {
-	ASSERT_NO_THROW(Stack<int> s(15));
+	ASSERT_NO_THROW(Queue<int> q(15));
 }
 
-TEST(Queue, can_create_stack_with_negative_length)
+TEST(Queue, can_create_queue_with_negative_length)
 {
-	ASSERT_ANY_THROW(Stack<int> s(-15));
+	ASSERT_ANY_THROW(Queue<int> q(-15));
 }
 
-TEST(Queue, can_create_copied_stack)
+TEST(Queue, can_create_copied_queue)
 {
-	Stack<int> s(5);
-	s.push(1);
-	ASSERT_NO_THROW(Stack<int> s_c(s));
+	Queue<int> q(5);
+	q.push(1);
+	ASSERT_NO_THROW(Queue<int> q_c(q));
 }
 
-TEST(Queue, empty_stack_is_empty)
+TEST(Queue, empty_queue_is_empty)
 {
-	Stack<int> s;
-	EXPECT_EQ(true, s.empty());
+	Queue<int> q;
+	EXPECT_EQ(true, q.empty());
 }
 
-TEST(Queue, not_empty_stack_is_not_empty)
+TEST(Queue, not_empty_queue_is_not_empty)
 {
-	Stack<int> s(10);
-	s.push(1);
-	EXPECT_EQ(false, s.empty());
+	Queue<int> q(10);
+	q.push(1);
+	EXPECT_EQ(false, q.empty());
 }
 
-TEST(Queue, full_stack_is_full)
+TEST(Queue, full_queue_is_full)
 {
-	Stack<int> s(1);
-	s.push(1);
-	EXPECT_EQ(true, s.full());
+	Queue<int> q(1);
+	q.push(1);
+	EXPECT_EQ(true, q.full());
 }
 
-TEST(Queue, not_full_stack_is_full)
+TEST(Queue, not_full_queue_is_full)
 {
-	Stack<int> s(3);
-	s.push(1);
-	EXPECT_EQ(false, s.full());
+	Queue<int> q(3);
+	q.push(1);
+	EXPECT_EQ(false, q.full());
 }
 
 TEST(Queue, can_get_size)
 {
-	Stack<int> s(3);
-	s.push(1);
-	EXPECT_EQ(1, s.size());
+	Queue<int> q(3);
+	q.push(1);
+	EXPECT_EQ(1, q.get_size());
 }
 
-TEST(Queue, can_allocate_mem_for_biger_stack)
+TEST(Queue, can_allocate_mem_for_biger_queue)
 {
-	Stack<int> s(9);
+	Queue<int> q(9);
 	for (int i = 0; i < 9; i++)
-		s.push(1);
-	s.push(1);
-	std::cout << s.size() << "\n";
-	EXPECT_EQ(10, s.size());
+		q.push(1);
+	q.push(1);
+	EXPECT_EQ(10, q.get_size());
 }
 
-TEST(Queue, can_get_top_elem)
+TEST(Queue, can_get_first_elem)
 {
-	Stack<int> s(5);
-	s.push(3);
-	EXPECT_EQ(3, s.top());
+	Queue<int> q(5);
+	q.push(3);
+	EXPECT_EQ(3, q.get());
 }
 
-TEST(Queue, can_not_get_top_elem_from_stack_with_no_elem)
+TEST(Queue, can_not_get_top_elem_from_queue_with_no_elem)
 {
-	Stack<int> s(2);
-	ASSERT_ANY_THROW(s.top());
+	Queue<int> q(2);
+	ASSERT_ANY_THROW(q.get());
 }
 
 TEST(Queue, can_pop_elem)
 {
-	Stack<int> s(2);
-	s.push(3);
-	s.push(1);
-	s.pop();
-	EXPECT_EQ(3, s.top());
+	Queue<int> q(2);
+	q.push(3);
+	q.push(1);
+	q.pop();
+	EXPECT_EQ(1, q.get());
 }
 
-TEST(Queue, can_not_pop_elem_from_empty_stack)
+TEST(Queue, can_not_pop_elem_from_empty_queue)
 {
-	Stack<int> s(10);
-	ASSERT_ANY_THROW(s.pop());
+	Queue<int> q(10);
+	ASSERT_ANY_THROW(q.pop());
 }
 
 TEST(Queue, can_push_elem)
 {
-	Stack<int> s(10);
-	ASSERT_NO_THROW(s.push(14));
+	Queue<int> q(10);
+	ASSERT_NO_THROW(q.push(14));
 }
