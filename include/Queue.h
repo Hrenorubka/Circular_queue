@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <memory>
+
 using std::unique_ptr;
 
 template <class ValType>
@@ -13,12 +14,19 @@ private:
 	ValType *end_queue;
 	unique_ptr<ValType> container;
 	int size;
-	void icrease()
+	void resize()
 	{
 		int new_size = size + 5 + size / 3;
 		ValType *obl = new ValType[new_size];
 		int i = 0;
 		ValType *step = end_queue;
+		if (step == NULL)
+		{
+			container.reset(obl);
+			begin_queue = container.get();
+			size = new_size;
+			return;
+		}
 		while (step != begin_queue)
 		{
 			obl[i] = *step;
@@ -29,9 +37,7 @@ private:
 				step++;
 		}
 		obl[i] = *step;
-		unique_ptr<ValType> new_container;
-		new_container.reset(obl);
-		container.swap(new_container);
+		container.reset(obl);
 		end_queue = container.get();
 		begin_queue = end_queue + i;
 		size = new_size;
@@ -100,6 +106,10 @@ public:
 	{
 		if (end_queue == NULL)
 		{
+			if (size == 0)
+			{
+				resize();
+			}
 			*begin_queue = elem;
 			end_queue = begin_queue;
 			return;
@@ -111,7 +121,7 @@ public:
 			obl++;
 		if (obl == end_queue)
 		{
-			icrease();
+			resize();
 			obl = begin_queue + 1;
 		}
 		begin_queue = obl;
@@ -122,17 +132,9 @@ public:
 	{
 		if (end_queue == NULL)
 			return 0;
-		int i = 1;
-		ValType *step = end_queue;
-		while (step != begin_queue)
-		{
-			i++;
-			if (step == container.get() + size - 1)
-				step = container.get();
-			else
-				step++;
-		}
-		return i;
+		if (begin_queue >= end_queue)
+			return begin_queue - end_queue + 1;
+		return (container.get() + size - begin_queue) + (end_queue - container.get() + 1);
 	}
 	bool empty()
 	{

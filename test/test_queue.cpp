@@ -99,3 +99,8 @@ TEST(Queue, can_push_elem)
 	Queue<int> q(10);
 	ASSERT_NO_THROW(q.push(14));
 }
+TEST(Queue, can_push_elem_in_queue_with_zero_size)
+{
+	Queue<int> q(0);
+	ASSERT_NO_THROW(q.push(14));
+}
